@@ -36,6 +36,9 @@ int main(void)
 		if (buffer[byte - 1] == '\n')
 			buffer[byte - 1] = '\0';
 
+		if (_strcmp(buffer, "exit") == 0)
+			break;
+
 		c_pid = fork();
 
 		if (c_pid == -1)
@@ -44,14 +47,19 @@ int main(void)
 			exit(EXIT_FAILURE);
 		}
 		if (c_pid == 0)
-			_execute(buffer, &statbuf, env);
-
-		if (waitpid(c_pid, &w_status, 0) == -1)
 		{
-			perror("Error (waitpid)");
-			exit(EXIT_FAILURE);
+			_execute(buffer, &statbuf, env);
+			exit(EXIT_SUCCESS);
 		}
+		else
+		{
 
+			if (waitpid(c_pid, &w_status, 0) == -1)
+			{
+				perror("Error (waitpid)");
+				exit(EXIT_FAILURE);
+			}
+		}
 	}
 
 	free(buffer);
@@ -71,17 +79,29 @@ int main(void)
 int _execute(char *arguments, struct stat *statbuf, char **envp)
 {
 	int word_count;
-	char **argv;
+	char **argv, *full_path;
 
 	argv = split_string(arguments, " ", (int *)&word_count);
+	full_path = find_path(argv[0]);
 
-	if (!_check_file(argv[0], statbuf))
+	if (full_path == NULL)
 	{
 		perror("Error (file status)");
 		exit(EXIT_FAILURE);
 	}
 
-	execve(argv[0], argv, envp);
+	if (stat(full_path, statbuf) == -1)
+	{
+		perror("Error (file status)");
+		exit(EXIT_FAILURE);
+	}
+	if (_strcmp(argv[0], "env") == 0)
+	{
+		_env();
+		return (1);
+	}
+
+	execve(full_path, argv, envp);
 	perror("Error (execve)");
 	exit(EXIT_FAILURE);
 }
