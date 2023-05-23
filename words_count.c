@@ -79,3 +79,4 @@ unsigned int words_count(char *str, char *separators, unsigned int *arr)
 	return (word_count);
 }
 
+
