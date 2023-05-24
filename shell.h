@@ -24,6 +24,7 @@ bool is_delimiter(char c, char *delimiters);
 bool _check_file(char *filepath, struct stat *statbuf);
 char **split_string(char *str, char *seperator, int *word_count);
 int _execute(char *arguments, struct stat *statbuf, char **envp);
+void child_process(char *buffer, struct stat *statbuf, char **env);
 void execute_fork(char **argv, char **envp);
 char *read_command();
 void display_prompt(void);

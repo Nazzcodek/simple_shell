@@ -9,8 +9,10 @@
 int main(void)
 {
 	struct stat statbuf;
-	char **env = NULL, *buffer;
+	char **env = NULL, *buffer = NULL;
 	bool pipe = false;
+	size_t b_size = 0;
+	ssize_t byte;
 
 	while (1 && !pipe)
 	{
@@ -18,19 +20,25 @@ int main(void)
 		pipe = true;
 
 		display_prompt();
-		buffer = read_command();
+		byte = getline(&buffer, &b_size, stdin);
 
-		if (_strcmp(buffer, "exit") == 0)
+		if (byte == -1)
 		{
+			perror("Error (getline)");
 			free(buffer);
-			break;
+			exit(EXIT_FAILURE);
 		}
 
-		_execute(buffer, &statbuf, env);
+		if (buffer[byte - 1] == '\n')
+			buffer[byte - 1] = '\0';
 
-		free(buffer);
+		if (_strcmp(buffer, "exit") == 0)
+			break;
+
+		child_process(buffer, &statbuf, env);
 	}
 
+	free(buffer);
 	return (0);
 }
 
@@ -61,21 +69,18 @@ int _execute(char *arguments, struct stat *statbuf, char **envp)
 	if (stat(full_path, statbuf) == -1)
 	{
 		perror("Error (file status)");
-		free(argv);
 		exit(EXIT_FAILURE);
 	}
 
 	if (_strcmp(argv[0], "env") == 0)
 	{
 		_env();
-		free_split_string(argv, word_count);
 		return (1);
 	}
 
-	execute_fork(argv, envp);
-
-	free(argv);
-	return (1);
+	execve(full_path, argv, envp);
+	perror("Error (execve)");
+	exit(EXIT_FAILURE);
 }
 
 /**
