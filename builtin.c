@@ -4,16 +4,25 @@
 /**
  * _env -writing the enviroment to the shell
  *
- * Return: void
+ * @sh: status of the shell
+ *
+ * Return: (1)
  */
 
-void _env(void)
+int _env(status *sh)
 {
-	int i;
+	int i, j;
 
-	for (i = 0; environ[i]; i++)
+	for (i = 0; sh->_environ[i]; i++)
 	{
-		write(STDOUT_FILENO, environ[i], _strlen(environ[i]));
+
+		for (j = 0; sh->_environ[i][j]; j++)
+			;
+
+		write(STDOUT_FILENO, sh->_environ[i], j);
 		write(STDOUT_FILENO, "\n", 1);
 	}
+	sh->status = 0;
+
+	return (1);
 }

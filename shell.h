@@ -16,6 +16,12 @@
 #define MAX_WORD_COUNT 100
 #define BUFSIZE 3200
 
+typedef struct data
+{
+	int status;
+	char **_environ;
+} status;
+
 extern char **environ;
 
 int main(void);
@@ -43,7 +49,7 @@ char *_strchr(const char *str, int c);
 unsigned int words_count(char *str, char *separators, unsigned int *arr);
 unsigned int shift_string(char **str, char *separators);
 char *_getenv(const char *name);
-void _env(void);
+int _env(status *sh);
 void free_split_string(char **words, int word_count);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 

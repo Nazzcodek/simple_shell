@@ -56,6 +56,7 @@ int _execute(char *arguments, struct stat *statbuf, char **envp)
 {
 	int word_count;
 	char **argv, *full_path;
+	status *sh = NULL;
 
 	argv = split_string(arguments, " ", (int *)&word_count);
 	full_path = find_path(argv[0]);
@@ -74,7 +75,7 @@ int _execute(char *arguments, struct stat *statbuf, char **envp)
 
 	if (_strcmp(argv[0], "env") == 0)
 	{
-		_env();
+		_env(sh);
 		return (1);
 	}
 
