@@ -12,7 +12,7 @@ char *find_path(char *command)
 	char *full_path = _getenv("PATH");
 	char *file_path;
 
-	if (strchr(command, '/') != NULL && access(command, X_OK) == 0)
+	if (_strchr(command, '/') != NULL && access(command, X_OK) == 0)
 	{
 		return (_strdup(command));
 	}
@@ -37,10 +37,12 @@ char *iterate_paths(char *full_path, char *command)
 {
 	char *full_path_copy = _strdup(full_path);
 	char *path_token = strtok(full_path_copy, ":");
-	char *file_path = create_file_path(path_token, command);
+	char *file_path;
 
 	while (path_token != NULL)
 	{
+		file_path = create_file_path(path_token, command);
+
 		if (access(file_path, X_OK) == 0)
 		{
 			free(full_path_copy);

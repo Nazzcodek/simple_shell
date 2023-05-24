@@ -10,6 +10,6 @@ void set_zeros(unsigned int *arr, size_t size)
 {
 	size_t x;
 
-	for (x = 0; x < size; x++
-			arr[x] = 0;
+	for (x = 0; x < size; x++)
+		arr[x] = 0;
 }

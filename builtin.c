@@ -2,7 +2,7 @@
 
 
 /**
- * env -writing the enviroment to the shell
+ * _env -writing the enviroment to the shell
  *
  * Return: void
  */

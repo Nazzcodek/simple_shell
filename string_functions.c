@@ -38,7 +38,7 @@ int _strlen(const char *s)
 	if (!s)
 		return (length);
 
-	for (length = 0; s[length]; lenght++)
+	for (length = 0; s[length]; length++)
 		;
 	return (length);
 }
@@ -91,6 +91,14 @@ char *_strdup(const char *str)
 	size_t len = _strlen(str) + 1;
 	char *copy = malloc(len);
 
+	if (str == NULL)
+		return (NULL);
+
 	if (copy != NULL)
+	{
 		_strcpy(copy, str);
+		return (copy);
+	}
+
+	return (NULL);
 }
