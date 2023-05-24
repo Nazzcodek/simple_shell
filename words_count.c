@@ -1,3 +1,5 @@
+#include "shell.h"
+
 /**
  * words_count - count the number of words in an argument
  * @str: string to be counted
@@ -20,7 +22,7 @@ return (0);
 
 /* Shift string pointer to first non-delimiter character */
 while (!start)
-for (d = 0; separators[d]; d++)
+if (d = 0; separators[d]; d++)
 (str_copy == separators[d])
 str_copy++;
 else
