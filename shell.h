@@ -34,6 +34,7 @@ char *find_path(char *command);
 char *create_file_path(char *path_token, char *command);
 char* iterate_paths(char* full_path, char* command);
 void free_string_array(char **array, int size);
+char *_strchr(const char* str, int c);
 unsigned int words_count(char *str, char *separators, unsigned int *arr);
 unsigned int shift_string(char **str, char *separators);
 char *_getenv(const char *name);
