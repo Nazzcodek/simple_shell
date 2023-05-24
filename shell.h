@@ -14,6 +14,7 @@
 #include <stdbool.h>
 
 #define MAX_WORD_COUNT 100
+#define BUFSIZE 3200
 
 extern char **environ;
 
@@ -43,5 +44,6 @@ unsigned int shift_string(char **str, char *separators);
 char *_getenv(const char *name);
 void _env(void);
 void free_split_string(char **words, int word_count);
+ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
 
 #endif /* __SHELL_H__*/

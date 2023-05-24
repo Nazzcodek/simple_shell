@@ -54,8 +54,8 @@ int _execute(char *arguments, struct stat *statbuf, char **envp)
 
 	if (full_path == NULL)
 	{
-		free(argv);
-		return (1);
+		perror("Error (file status)");
+		exit(EXIT_FAILURE);
 	}
 
 	if (stat(full_path, statbuf) == -1)
