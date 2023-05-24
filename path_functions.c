@@ -12,6 +12,11 @@ char* find_path(char* command)
 	char* full_path = _getenv("PATH");
 	char* file_path;
 
+	if (strchr(command, '/') != NULL && access(command, X_OK) == 0)
+	{
+		return (_strdup(command));
+	}
+
 	if (full_path)
 	{
 		file_path = iterate_paths(full_path, command);
