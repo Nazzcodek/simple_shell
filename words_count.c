@@ -26,6 +26,7 @@ unsigned int shift_string(char **str, char *separators)
 
 	return (d);
 }
+
 /**
  * words_count - Counting of words in a string
  *
@@ -40,6 +41,7 @@ unsigned int words_count(char *str, char *separators, unsigned int *arr)
 	unsigned int c, word_len = 1, word_count = 0;
 	char *str_copy = str;
 	bool delimiter;
+
 
 	if (!str)
 		return (0);
