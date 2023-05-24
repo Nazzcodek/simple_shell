@@ -7,10 +7,10 @@
  *
  * Return: NULL
  */
-char* find_path(char* command)
+char *find_path(char *command)
 {
-	char* full_path = _getenv("PATH");
-	char* file_path;
+	char *full_path = _getenv("PATH");
+	char *file_path;
 
 	if (strchr(command, '/') != NULL && access(command, X_OK) == 0)
 	{
@@ -33,14 +33,14 @@ char* find_path(char* command)
  *
  * Return: NULL
  */
-char* iterate_paths(char* full_path, char* command)
+char *iterate_paths(char *full_path, char *command)
 {
-	char* full_path_copy = _strdup(full_path);
-	char* path_token = strtok(full_path_copy, ":");
+	char *full_path_copy = _strdup(full_path);
+	char *path_token = strtok(full_path_copy, ":");
+	char *file_path = create_file_path(path_token, command);
 
 	while (path_token != NULL)
 	{
-		char* file_path = create_file_path(path_token, command);
 		if (access(file_path, X_OK) == 0)
 		{
 			free(full_path_copy);
@@ -65,11 +65,11 @@ char* iterate_paths(char* full_path, char* command)
  *
  * Return: full path
  */
-char* create_file_path(char* path_token, char* command)
+char *create_file_path(char *path_token, char *command)
 {
 	int command_len = _strlen(command);
 	int dir_len = _strlen(path_token);
-	char* file_path = malloc(command_len + dir_len + 2);
+	char *file_path = malloc(command_len + dir_len + 2);
 
 	_strcpy(file_path, path_token);
 	_strcat(file_path, "/");
@@ -86,12 +86,11 @@ char* create_file_path(char* path_token, char* command)
  *
  * Return: NULL
  */
-char* _getenv(const char* name)
+char *_getenv(const char *name)
 {
-	extern char** environ;
-	char* env;
+	char *env;
 	int j = 0, i;
-	
+
 	if (name == NULL)
 		return (NULL);
 

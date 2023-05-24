@@ -1,7 +1,5 @@
 #include "shell.h"
 
-extern char **environ;
-
 /**
  * main - entry point to the shell
  *
@@ -16,7 +14,6 @@ int main(void)
 	int w_status;
 	struct stat statbuf;
 	char **env = NULL;
-	char *full_path = find_path(buffer);
 	bool pipe = false;
 
 	while (1 && !pipe)
@@ -29,7 +26,7 @@ int main(void)
 		byte = getline(&buffer, &b_size, stdin);
 
 		if (byte == -1)
-                {
+		{
 			perror("Error (getline)");
 			free(buffer);
 			exit(EXIT_FAILURE);
@@ -39,12 +36,6 @@ int main(void)
 
 		if (_strcmp(buffer, "exit") == 0)
 			break;
-		
-		if (buffer == NULL || buffer[0] == '\0')
-			continue;
-		
-		if (full_path == NULL)
-			continue;
 
 		c_pid = fork();
 
