@@ -42,7 +42,6 @@ unsigned int words_count(char *str, char *separators, unsigned int *arr)
 	char *str_copy = str;
 	bool delimiter;
 
-
 	if (!str)
 		return (0);
 

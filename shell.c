@@ -73,7 +73,7 @@ int _execute(char *arguments, struct stat *statbuf, char **envp)
 	}
 
 	execute_fork(argv, envp);
-	
+
 	free(argv);
 	return (1);
 }
