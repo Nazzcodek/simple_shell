@@ -80,5 +80,24 @@ unsigned int words_count(char *str, char *separators, unsigned int *arr)
 
 	return (word_count);
 }
+/**
+ * free_split_string - free string that has been splited
+ *
+ * @words: string to be splited
+ * @word_count: number of words in string
+ *
+ * Return: words
+ */
+void free_split_string(char **words, int word_count)
+{
+	int i;
 
+	if (words == NULL)
+		return;
+
+	for (i = 0; i < word_count; i++)
+		free(words[i]);
+
+	free(words);
+}
 

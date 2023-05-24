@@ -5,62 +5,32 @@
  *
  * Return: (0) for success
  */
+
 int main(void)
 {
-	char *buffer = NULL, *prompt = "cisfun$ ";
-	size_t b_size = 0;
-	ssize_t byte;
-	pid_t c_pid;
-	int w_status;
 	struct stat statbuf;
-	char **env = NULL;
+	char **env = NULL, *buffer;
 	bool pipe = false;
 
 	while (1 && !pipe)
 	{
 		if (isatty(STDIN_FILENO) == 0)
-			pipe = true;
+		pipe = true;
 
-		write(STDIN_FILENO, prompt, 8);
-
-		byte = getline(&buffer, &b_size, stdin);
-
-		if (byte == -1)
-		{
-			perror("Error (getline)");
-			free(buffer);
-			exit(EXIT_FAILURE);
-		}
-		if (buffer[byte - 1] == '\n')
-			buffer[byte - 1] = '\0';
+		display_prompt();
+		buffer = read_command();
 
 		if (_strcmp(buffer, "exit") == 0)
+		{
+			free(buffer);
 			break;
-
-		c_pid = fork();
-
-		if (c_pid == -1)
-		{
-			perror("Error (fork)");
-			exit(EXIT_FAILURE);
 		}
-		if (c_pid == 0)
-		{
-			_execute(buffer, &statbuf, env);
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
 
-			if (waitpid(c_pid, &w_status, 0) == -1)
-			{
-				perror("Error (waitpid)");
-				exit(EXIT_FAILURE);
-			}
-		}
+		_execute(buffer, &statbuf, env);
+
+		free(buffer);
 	}
 
-	free(buffer);
 	return (0);
 }
 
@@ -72,7 +42,7 @@ int main(void)
  * @statbuf: structure of the buffer
  * @envp: enviromental variable
  *
- * Return: nothing
+ * Return: (1)
  */
 int _execute(char *arguments, struct stat *statbuf, char **envp)
 {
@@ -84,24 +54,28 @@ int _execute(char *arguments, struct stat *statbuf, char **envp)
 
 	if (full_path == NULL)
 	{
-		perror("Error (file status)");
-		exit(EXIT_FAILURE);
+		free(argv);
+		return (1);
 	}
 
 	if (stat(full_path, statbuf) == -1)
 	{
 		perror("Error (file status)");
+		free(argv);
 		exit(EXIT_FAILURE);
 	}
+
 	if (_strcmp(argv[0], "env") == 0)
 	{
 		_env();
+		free_split_string(argv, word_count);
 		return (1);
 	}
 
-	execve(full_path, argv, envp);
-	perror("Error (execve)");
-	exit(EXIT_FAILURE);
+	execute_fork(argv, envp);
+	
+	free(argv);
+	return (1);
 }
 
 /**

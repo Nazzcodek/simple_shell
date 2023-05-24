@@ -43,6 +43,9 @@ void execute_fork(char **argv, char **envp)
 {
 	pid_t c_pid;
 	int w_status;
+	char *full_path;
+
+	full_path = find_path(argv[0]);
 
 	c_pid = fork();
 
@@ -54,7 +57,7 @@ void execute_fork(char **argv, char **envp)
 
 	if (c_pid == 0)
 	{
-		execve(argv[0], argv, envp);
+		execve(full_path, argv, envp);
 		perror("Error (execve)");
 		exit(EXIT_FAILURE);
 	}
