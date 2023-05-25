@@ -33,7 +33,7 @@ int main(void)
 			buffer[byte - 1] = '\0';
 
 		if (_strcmp(buffer, "exit") == 0)
-			break;
+			exit(EXIT_SUCCESS);
 
 		child_process(buffer, &statbuf, env);
 	}
