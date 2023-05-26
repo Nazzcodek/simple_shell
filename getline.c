@@ -67,7 +67,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	fflush(stdout);
 	if (*lineptr == NULL && *n == 0)
 	{
-		*n = CL_CHAR_NUM;
+		*n = CHAR;
 		buf = malloc(*n);
 		if (buf == NULL)
 			return (-1);

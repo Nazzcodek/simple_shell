@@ -20,7 +20,7 @@ int main(void)
 		pipe = true;
 
 		display_prompt();
-		byte = getline(&buffer, &b_size, stdin);
+		byte = _getline(&buffer, &b_size, stdin);
 
 		if (byte == -1)
 		{

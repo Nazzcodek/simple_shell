@@ -60,5 +60,8 @@ void _env(void);
 void cd(char **argv, char **env);
 int set_pwd(char **env, char *current);
 int _var(char *name, char *value, char **env);
+void *_realloc(void *ptr, size_t old_size, size_t new_size);
+ssize_t _get_line(char **p, char *q, char *r, char *ending_buf, size_t *n);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif /* __SHELL_H__*/
