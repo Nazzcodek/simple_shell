@@ -13,15 +13,8 @@ void child_process(char *buffer, struct stat *statbuf, char **env)
 {
 	pid_t c_pid;
 	int w_status;
-	char *path;
 
-	path = find_path(buffer);
-	if (path == NULL)
-	{
-		perror("./hsh");
-	}
-	else
-		c_pid = fork();
+	c_pid = fork();
 
 	if (c_pid == -1)
 	{
@@ -42,4 +35,5 @@ void child_process(char *buffer, struct stat *statbuf, char **env)
 			exit(EXIT_FAILURE);
 		}
 	}
+
 }
