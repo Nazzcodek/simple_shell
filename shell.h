@@ -52,5 +52,6 @@ char *_getenv(const char *name);
 int _env(status *sh);
 void free_split_string(char **words, int word_count);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
+int builtin(char **argv, char **en);
 
 #endif /* __SHELL_H__*/
