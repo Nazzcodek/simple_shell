@@ -9,7 +9,17 @@
  */
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+	int ret;
+
+	ret = write(1, &c, 1);
+
+	if (ret < 0)
+	{
+		perror("write");
+		exit(EXIT_FAILURE);
+	}
+
+	return (ret);
 }
 
 /**
@@ -33,3 +43,4 @@ void _put(char *str)
 		count++;
 	}
 }
+
