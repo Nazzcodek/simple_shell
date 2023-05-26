@@ -13,6 +13,9 @@ void child_process(char *buffer, struct stat *statbuf, char **env)
 {
 	pid_t c_pid;
 	int w_status;
+	int is_builtin = 0;
+	char **argv;
+	int word_count;
 
 	c_pid = fork();
 
@@ -24,7 +27,20 @@ void child_process(char *buffer, struct stat *statbuf, char **env)
 
 	if (c_pid == 0)
 	{
-		_execute(buffer, statbuf, env);
+		argv = split_string(buffer, " ", (int *)&word_count);
+
+		if (_strcmp(argv[0], "exit") == 0)
+			exit(EXIT_SUCCESS);
+
+		is_builtin = builtin(argv, env);
+
+		if (!is_builtin)
+		{
+			_execute(buffer, statbuf, env);
+			perror("Error (execve)");
+			exit(EXIT_FAILURE);
+		}
+
 		exit(EXIT_SUCCESS);
 	}
 	else

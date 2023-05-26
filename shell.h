@@ -14,7 +14,9 @@
 #include <stdbool.h>
 
 #define MAX_WORD_COUNT 100
-#define BUFSIZE 3200
+#define BUFSIZE 1024
+#define CHAR 10
+
 
 typedef struct data
 {
@@ -49,9 +51,14 @@ char *_strchr(const char *str, int c);
 unsigned int words_count(char *str, char *separators, unsigned int *arr);
 unsigned int shift_string(char **str, char *separators);
 char *_getenv(const char *name);
-int _env(status *sh);
 void free_split_string(char **words, int word_count);
 ssize_t get_line(char **lineptr, size_t *n, FILE *stream);
-int builtin(char **argv, char **en);
+int builtin(char **argv, char **env);
+void _put(char *str);
+int _putchar(char c);
+void _env(void);
+void cd(char **argv, char **env);
+int set_pwd(char **env, char *current);
+int _var(char *name, char *value, char **env);
 
 #endif /* __SHELL_H__*/
