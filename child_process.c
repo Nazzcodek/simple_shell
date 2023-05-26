@@ -12,10 +12,9 @@
 void child_process(char *buffer, struct stat *statbuf, char **env)
 {
 	pid_t c_pid;
-	int w_status;
+	int w_status, word_count;
 	int is_builtin = 0;
 	char **argv;
-	int word_count;
 
 	c_pid = fork();
 
